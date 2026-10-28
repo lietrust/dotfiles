@@ -21,6 +21,7 @@ After installation edit `.gitconfig` to set your own git name and email.
 **Dev:** 
 - gcc (compiler)
 - make
+- wget (web download tool)
 
 **Env:** 
 - dwm (window manager)
