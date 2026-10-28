@@ -1,0 +1,11 @@
+*.o
+*.a
+*.so
+suckless/dwm/dwm
+suckless/st/st
+suckless/dmenu/dmenu
+suckless/surf/surf
+
+suckless/**/.git
+suckless/**/.gitignore
+
