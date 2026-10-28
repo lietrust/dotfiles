@@ -10,7 +10,7 @@ sudo apt-get update && sudo apt-get upgrade
 
 echo "Cleaning up default config bloat..."
 for file in .bashrc .profile .bash_logout .gitconfig .xinitrc .wgetrc .Xauthority; do
-    if [ -f "$HOME/$file" && [ ! -L "$HOME/$file" ]; then
+    if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then
         sudo rm -f "$HOME/$file"
     fi
 done
@@ -21,7 +21,7 @@ ln -sf "$DOTFILES_DIR/.bashrc"           "$HOME/.bashrc"
 ln -sf "$DOTFILES_DIR/.gitconfig"        "$HOME/.gitconfig"
 ln -sf "$DOTFILES_DIR/.xinitrc"          "$HOME/.xinitrc"
 ln -sf "$DOTFILES_DIR/.wgetrc"           "$HOME/.wgetrc"
-
+ln -sf "$DOTFILES_DIR/.bash_profile"     "$HOME/.bash_profile"
 
 echo "Installing needed tools"
 sudo apt-get install -y \

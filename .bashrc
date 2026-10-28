@@ -1,9 +1,14 @@
+case $- in  *i*) ;; *) return ;; esac
+
+
 # Save history in history folder
 export HISTFILE="$HOME/.dotfiles/history/.bash_history"
 export HISTCONTROL=ignoreboth
 export HISTSIZE=1000
 export HISTFILESIZE=1000
-
+shopt -s histappend
+PROMPT_COMMAND="history -a${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+export LESSHISTFILE=-
 
 export TERM=xterm-256color
 PS1='[\u@\h:\W]\$ '
