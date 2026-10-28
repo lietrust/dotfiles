@@ -54,6 +54,7 @@ for tool in "$DOTFILES_DIR/suckless"/*/; do
 
     (
         cd "$tool" &&
+        rm -f config.h &&
         sudo make clean install &>/dev/null
     ) || {
         echo "Error: building $tool_name failed!" >&2
