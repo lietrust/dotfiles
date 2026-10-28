@@ -8,7 +8,7 @@ It installs the packages I need and sets up my environment.
 
 Run from your `$HOME` directory
 ```
-git clone https://github.com/lietrust/dotfiles.git .dotfiles
+git clone --recursive https://github.com/lietrust/dotfiles.git .dotfiles
 cd .dotfiles
 ./install.sh
 ```
