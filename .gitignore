@@ -1,6 +1,9 @@
 *.o
 *.a
 *.so
+
+history/*
+
 suckless/dwm/dwm
 suckless/st/st
 suckless/dmenu/dmenu
