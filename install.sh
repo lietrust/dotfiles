@@ -65,7 +65,7 @@ for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
                fi
                git am --abort &>/dev/null
 
-               git apply --3way --ignore-space-change --ignore-whitespace "$patch"
+               git apply --3way --ignore-space-change --ignore-whitespace "$patch" &>/dev/null
                if [ $? -eq 0 ]; then
                    exit 0
                fi
