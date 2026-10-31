@@ -71,7 +71,7 @@ for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
                    exit 0
                fi
 
-               if patch -p1 -N --fuzz=3 < "$abs_patch" &>/dev/null; then
+               if patch -p1 -N --batch --fuzz=3 < "$abs_patch" &>/dev/null; then
                    exit 0
                fi
 
