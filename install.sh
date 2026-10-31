@@ -51,7 +51,7 @@ for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
     if [ -d "$tool/patch" ]; then
         for patch in "$tool/patch"/*; do
            tool_name=$(basename "$tool")
-           abs_patch=$(realpath "$patch"
+           abs_patch=$(realpath "$patch")
 
            (
                cd "$DOTFILES_DIR/suckless/$tool_name" || exit 1
