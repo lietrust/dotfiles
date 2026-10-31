@@ -51,27 +51,27 @@ for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
     if [ -d "$tool/patch" ]; then
         for patch in "$tool/patch"/*; do
            tool_name=$(basename "$tool")
+           abs_patch=$(realpath "$patch"
+
            (
-               cd "$DOTFILES_DIR/suckless/$tool_name" && \
-               git apply --check "$patch" &>/dev/null
-               if [ $? -eq 0 ]; then
+               cd "$DOTFILES_DIR/suckless/$tool_name" || exit 1
+               
+               if git apply --check "$abs_patch" &>/dev/null; then
                    git apply "$patch"
                    exit 0
                fi
 
                git am --abort &>/dev/null
-               if git am --ignore-space-change --ignore-whitespace "$patch" &>/dev/null; then
+               if git am --ignore-space-change --ignore-whitespace "$abs_patch" &>/dev/null; then
                    exit 0
                fi
                git am --abort &>/dev/null
 
-               git apply --3way --ignore-space-change --ignore-whitespace "$patch" &>/dev/null
-               if [ $? -eq 0 ]; then
+               if git apply --3way --ignore-space-change --ignore-whitespace "$abs_patch" &>/dev/null; then
                    exit 0
                fi
 
-               if patch -p1 -N --dry-run < "$patch" &>/dev/null; then
-                   patch -p1 < "$patch"
+               if patch -p1 -N --fuzz=3 < "$abs_patch" &>/dev/null; then
                    exit 0
                fi
 
