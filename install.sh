@@ -49,6 +49,17 @@ echo "Patch suckless..."
 for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
     [ -d "$tool" ] || continue
     tool_name=$(basename "$tool")
+
+    if [ -d "$DOTFILES_DIR/suckless/$tool_name" ]; then
+        echo "Cleaning $tool_name"
+        (
+            cd "$DOTFILES_DIR/suckless/$tool_name" && \
+            git am --abort &>/dev/null
+            git reset --hard HEAD &>/dev/null && \
+            git clean -df &>/dev/null
+        )
+    fi
+    
     if [ -d "$tool/patch" ]; then
         for patch in "$tool/patch"/*; do
            abs_patch=$(realpath "$patch")
