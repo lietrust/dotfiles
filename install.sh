@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DOTFILES_DIR="$HOME/.dotfiles"
+DOTS_DIR="$DOTFILES_DIR/dots"
 
 mkdir -p "$DOTFILES_DIR/history"
 
@@ -17,11 +18,11 @@ done
 
 
 echo "Creating symlinks..."
-ln -sf "$DOTFILES_DIR/.bashrc"           "$HOME/.bashrc"
-ln -sf "$DOTFILES_DIR/.gitconfig"        "$HOME/.gitconfig"
-ln -sf "$DOTFILES_DIR/.xinitrc"          "$HOME/.xinitrc"
-ln -sf "$DOTFILES_DIR/.wgetrc"           "$HOME/.wgetrc"
-ln -sf "$DOTFILES_DIR/.bash_profile"     "$HOME/.bash_profile"
+ln -sf "$DOTS_DIR/.bashrc"           "$HOME/.bashrc"
+ln -sf "$DOTS_DIR/.gitconfig"        "$HOME/.gitconfig"
+ln -sf "$DOTS_DIR/.xinitrc"          "$HOME/.xinitrc"
+ln -sf "$DOTS_DIR/.wgetrc"           "$HOME/.wgetrc"
+ln -sf "$DOTS_DIR/.bash_profile"     "$HOME/.bash_profile"
 
 echo "Installing needed tools"
 sudo apt-get install -y \
