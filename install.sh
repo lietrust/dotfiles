@@ -45,6 +45,24 @@ sudo apt-get install -y  \
   xserver-xorg-core      \
   xserver-xorg-video-all
 
+echo "Patch suckless..."
+for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
+    [ -d "$tool" ] || continue
+    if [ -d "$tool/patch" ]; then
+        for patch in "$tool/patch"/*; do
+           tool_name=$(basename "$tool")
+           (
+               cd "$DOTFILES_DIR/suckless/$tool_name" &&
+               git apply --3way --ignore-space-change --ignore-whitespace "$patch"
+           ) || {
+               echo "Error: applying $patch to $tool_name failed!" >&2
+               exit 1
+           }
+        done
+    fi
+done
+
+
 echo "Compile suckless..."
 for tool in "$DOTFILES_DIR/suckless"/*/; do
     [ -d "$tool" ] || continue
