@@ -52,12 +52,38 @@ for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
         for patch in "$tool/patch"/*; do
            tool_name=$(basename "$tool")
            (
-               cd "$DOTFILES_DIR/suckless/$tool_name" &&
+               cd "$DOTFILES_DIR/suckless/$tool_name" && \
+               git apply --check "$patch" &>/dev/null
+               if [ $? -eq 0]; then
+                   git apply "$patch"
+                   exit 0
+               fi
+
+               git am --abort &>/dev/null
+               if git am --ignore-space-change --ignore-whitespace "$patch" &>/dev/null; then
+                   exit 0
+               fi
+               git am --abort &>/dev/null
+
                git apply --3way --ignore-space-change --ignore-whitespace "$patch"
-           ) || {
+               if [ $? -eq 0 ]; then
+                   exit 0
+               fi
+
+               if patch -p1 -N --dry-run < "$patch" &>/dev/null; then
+                   patch -p1 < "$patch"
+                   exit 0
+               fi
+
+               exit 1
+           )
+
+           if [ $? -ne 0 ]; then
                echo "Error: applying $patch to $tool_name failed!" >&2
                exit 1
-           }
+           else
+               echo "Patched $patch to $tool_name"
+           fi
         done
     fi
 done
