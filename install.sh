@@ -54,7 +54,7 @@ for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
            (
                cd "$DOTFILES_DIR/suckless/$tool_name" && \
                git apply --check "$patch" &>/dev/null
-               if [ $? -eq 0]; then
+               if [ $? -eq 0 ]; then
                    git apply "$patch"
                    exit 0
                fi
