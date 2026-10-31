@@ -48,14 +48,14 @@ sudo apt-get install -y  \
 echo "Patch suckless..."
 for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
     [ -d "$tool" ] || continue
+    tool_name=$(basename "$tool")
     if [ -d "$tool/patch" ]; then
         for patch in "$tool/patch"/*; do
-           tool_name=$(basename "$tool")
            abs_patch=$(realpath "$patch")
 
            (
                cd "$DOTFILES_DIR/suckless/$tool_name" || exit 1
-               
+
                if git apply --check "$abs_patch" &>/dev/null; then
                    git apply "$patch"
                    exit 0
@@ -79,12 +79,16 @@ for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
            )
 
            if [ $? -ne 0 ]; then
-               echo "Error: applying $patch to $tool_name failed!" >&2
+               echo "Error: applying $abs_patch to $tool_name failed!" >&2
                exit 1
            else
                echo "Patched $patch to $tool_name"
            fi
         done
+    fi
+
+    if [ -d "$tool/config" ]; then
+       cp "$tool/config/config.def.h" "$DOTFILES_DIR/suckless/$tool_name/config.def.h"
     fi
 done
 
