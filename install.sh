@@ -5,7 +5,7 @@ DOTS_DIR="$DOTFILES_DIR/dots"
 
 mkdir -p "$DOTFILES_DIR/history"
 
-echo "Doing basic system upgrade and update"
+echo "Doing basic system upgrade and update..."
 sudo apt-get update && sudo apt-get upgrade
 
 
@@ -24,7 +24,7 @@ ln -sf "$DOTS_DIR/.xinitrc"          "$HOME/.xinitrc"
 ln -sf "$DOTS_DIR/.wgetrc"           "$HOME/.wgetrc"
 ln -sf "$DOTS_DIR/.bash_profile"     "$HOME/.bash_profile"
 
-echo "Installing needed tools"
+echo "Installing needed tools..."
 sudo apt-get install -y \
   wget                  \
   git                   \
@@ -39,12 +39,22 @@ sudo apt-get install -y \
   libxss-dev            \
   pkg-config            \
   libwebkit2gtk-4.1-dev \
-  libgcr-3-dev
+  libgcr-3-dev          \
+  fontconfig
 
 sudo apt-get install -y  \
   xinit                  \
   xserver-xorg-core      \
   xserver-xorg-video-all
+
+echo "Installing fonts..."
+FONT_DEST="$HOME/.local/share/fonts"
+mkdir -p "$FONT_DEST"
+
+find "$FONT_DEST" -type l -delete
+
+ln -sf "$DOTFILES_DIR/fonts/"*.otf "$FONT_DEST/"
+fc-cache -fv &>/dev/null
 
 echo "Patch suckless..."
 for tool in "$DOTFILES_DIR/suckless-patched"/*/; do
